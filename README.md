@@ -184,3 +184,48 @@ Browser (React + Vite)
 ```
 
 Your data (plan, completed sessions, quiz answers) lives in **localStorage** — it's private to your browser. No database needed for personal use.
+
+Plan
+===
+
+ATHLETE: Intermediate runner. Target finish: 2 hours 13 min – 2 hours 21 min (race pace 6:18–6:41/km).
+Race: The Big Half London, Sunday 6 September 2026. Plan starts Monday 25 May 2026.
+
+WEEKLY STRUCTURE:
+
+WEEKS 1–6 (2 running days):
+- Monday: Legs (Gym) — heavy compound ~60 min (squats, deadlifts, leg press, lunges, RDLs)
+- Tuesday: RUNNING — key mid-week run. Starts 5km, builds each week. Easy effort wks 1–3, introduce tempo from wk 4.
+- Wednesday: Upper Body (Gym) — ~45 min (bench, rows, OHP, pull-ups, core)
+- Thursday: Rest — full recovery
+- Friday: Legs (Gym) — lighter ~40 min (lunges, step-ups, Bulgarians, calf raises). Keep moderate — run tomorrow.
+- Saturday: Easy Run 5km — her regular Saturday run. Keep at 5km every week. Easy conversational pace.
+- Sunday: Rest
+
+WEEKS 7–15 (3 running days — long run added Wednesday from wk 7, can flex to Thursday):
+- Monday: Legs (Gym) — heavy compound ~60 min
+- Tuesday: RUNNING — shorter run (easy or tempo, 5–8km). This is NOT the long run.
+- Wednesday: RUNNING — Long Run day. Starts 12km wk 7, builds to 19km peak wk 12, tapers after. Description must note "Flexible — shift to Thursday if needed."
+- Thursday: Rest — note in description "Or do your long run here instead of Wednesday"
+- Friday: Legs (Gym) — lighter ~40 min
+- Saturday: Easy Run 5km (wks 7–12), 4km (wk 13), 3km (wk 14), Rest (wk 15 — legs fresh for race)
+- Sunday: Rest
+
+PACE TARGETS — include in each run session description:
+- Easy Run: 7:10–7:30/km | Long Run: 7:00–7:20/km | Tempo: 6:00–6:20/km | Intervals: 5:35–5:55/km | Race: 6:18–6:41/km
+
+TUESDAY RUN PROGRESSION:
+Wk1=5km easy, Wk2=5km easy, Wk3=6km easy, Wk4=5km easy (cutback), Wk5=7km easy, Wk6=8km tempo,
+Wk7=6km easy, Wk8=5km easy (cutback), Wk9=8km tempo, Wk10=8km intervals, Wk11=10km tempo, Wk12=8km easy,
+Wk13=6km easy (taper), Wk14=5km easy (taper), Wk15=3km easy (race prep)
+
+WEDNESDAY LONG RUN (wks 7–15):
+Wk7=12km, Wk8=9km, Wk9=14km, Wk10=16km, Wk11=18km, Wk12=19km, Wk13=14km, Wk14=8km, Wk15=3km easy
+
+RUNNING TOTALS: Wk1=10, Wk2=10, Wk3=11, Wk4=10, Wk5=12, Wk6=13, Wk7=23, Wk8=19, Wk9=27, Wk10=29, Wk11=33, Wk12=32, Wk13=23, Wk14=16, Wk15=~6+race
+
+PERIOD NOTES — add to description where dates overlap:
+Period 1: Jun 8–13 | Period 2: Jul 2–7 | Period 3: Jul 26–31 | Period 4: Aug 19–24
+Days 1–2: reduce intensity 15%, prioritise iron + hydration. Days 3–6: energy returning, trust the training.
+
+CUTBACK WEEKS: 4, 8, 12
