@@ -116,6 +116,152 @@ body{font-family:'DM Sans',sans-serif;background:#070A0E;color:#E2DDD6;-webkit-t
 .opt.sel{border-color:#E84A00;background:rgba(232,74,0,.1);color:#E84A00;font-weight:600}
 `;
 
+// ── Deterministic plan builder ───────────────────────────────────────────────
+// The plan is fully specified, so we build it locally — no API key required.
+const WEEK_THEMES = [
+  "Foundation", "Foundation", "Building", "Cutback & Recover", "Building",
+  "First Tempo", "Long Run Begins", "Cutback & Recover", "Endurance",
+  "Speed & Intervals", "Peak Building", "Peak Week", "Taper Begins",
+  "Taper", "Race Week",
+];
+
+// Tuesday key run per week (index 0 = week 1)
+const TUE_RUNS = [
+  { km: 5,  type: "Easy Run"  }, { km: 5,  type: "Easy Run"  },
+  { km: 6,  type: "Easy Run"  }, { km: 5,  type: "Easy Run"  },
+  { km: 7,  type: "Easy Run"  }, { km: 8,  type: "Tempo Run" },
+  { km: 6,  type: "Easy Run"  }, { km: 5,  type: "Easy Run"  },
+  { km: 8,  type: "Tempo Run" }, { km: 8,  type: "Intervals" },
+  { km: 10, type: "Tempo Run" }, { km: 8,  type: "Easy Run"  },
+  { km: 6,  type: "Easy Run"  }, { km: 5,  type: "Easy Run"  },
+  { km: 3,  type: "Easy Run"  },
+];
+
+// Wednesday long run distance (weeks 7–15); weeks 1–6 are an Upper Body gym day
+const WED_LONG = { 7: 12, 8: 9, 9: 14, 10: 16, 11: 18, 12: 19, 13: 14, 14: 8, 15: 3 };
+
+// Saturday easy run km per week; 0 = rest (week 15, legs fresh for race)
+const SAT_KM = [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 4, 3, 0];
+
+const PLAN_START_MS = Date.UTC(2026, 4, 25); // Monday 25 May 2026
+const DAY_MS = 86400000;
+const DOW = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+const MON_ABBR = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const PACE_MID_MIN = { "Easy Run": 7.33, "Long Run": 7.17, "Tempo Run": 6.17, "Intervals": 6.5, "Race": 6.5 };
+const INTENSITY = { "Easy Run": "low", "Long Run": "low", "Tempo Run": "medium", "Intervals": "high", "Race": "race" };
+
+const isoDate    = ms => new Date(ms).toISOString().split("T")[0];
+const prettyDate = ms => { const d = new Date(ms); return `${d.getUTCDate()} ${MON_ABBR[d.getUTCMonth()]}`; };
+const estDuration = (type, km) => `${Math.round(km * (PACE_MID_MIN[type] || 7))} min`;
+
+function periodNote(dateStr) {
+  const info = getPeriodInfo(dateStr);
+  if (!info.onPeriod) return "";
+  return info.heavy
+    ? ` 🌸 Period day ${info.day} — ease intensity ~15% today; prioritise iron and hydration.`
+    : ` 🌸 Period day ${info.day} — energy returning, trust the training.`;
+}
+
+function runDesc(type, role, km) {
+  if (type === "Tempo Run") return `Tempo session — comfortably hard, a few words not full sentences. Warm up 1km easy, hold the effort, ease down. Target pace: ${PACE_GUIDE["Tempo Run"].range}.`;
+  if (type === "Intervals") return `Interval session — quality over quantity. Full recovery between reps; hold per-rep pace only. Target: ${PACE_GUIDE["Intervals"].range}.`;
+  if (role === "long")      return `Long run — time on feet matters more than pace. Steady, controlled effort. Flexible: shift to Thursday if your week needs it. Target pace: ${PACE_GUIDE["Long Run"].range}.`;
+  if (role === "tuesday")   return `Your key mid-week run — the session that builds every week. Easy conversational effort. Target pace: ${PACE_GUIDE["Easy Run"].range}.`;
+  return `Your regular Saturday ${km}km — your consistency anchor. Easy, enjoyable effort. Target pace: ${PACE_GUIDE["Easy Run"].range}.`;
+}
+
+function runSession(dayIdx, weekIdx, type, km, role) {
+  const dateStr = isoDate(PLAN_START_MS + (weekIdx * 7 + dayIdx) * DAY_MS);
+  return {
+    dayOfWeek: DOW[dayIdx], date: dateStr, type,
+    distance: `${km}km`, duration: estDuration(type, km), pace: PACE_GUIDE[type].range,
+    description: runDesc(type, role, km) + periodNote(dateStr), intensity: INTENSITY[type],
+  };
+}
+
+function staticSession(dayIdx, weekIdx, type, duration, intensity, desc) {
+  const dateStr = isoDate(PLAN_START_MS + (weekIdx * 7 + dayIdx) * DAY_MS);
+  return {
+    dayOfWeek: DOW[dayIdx], date: dateStr, type,
+    distance: "—", duration, pace: "—",
+    description: desc + periodNote(dateStr), intensity,
+  };
+}
+
+function buildPlan() {
+  const weeks = [];
+  for (let w = 0; w < N_WEEKS; w++) {
+    const weekNumber = w + 1;
+    const monMs = PLAN_START_MS + w * 7 * DAY_MS;
+    const has3Runs = weekNumber >= 7;
+    const sessions = [];
+
+    // Monday — heavy legs
+    sessions.push(staticSession(0, w, "Legs (Gym)", "60 min", "gym",
+      "Heavy compound leg day. Squats, deadlifts, leg press, lunges, Romanian deadlifts. Warm up well."));
+
+    // Tuesday — key mid-week run
+    const tue = TUE_RUNS[w];
+    sessions.push(runSession(1, w, tue.type, tue.km, "tuesday"));
+
+    // Wednesday — Upper Body gym (wks 1–6) or long run (wks 7–15)
+    if (has3Runs) {
+      const longType = weekNumber === 15 ? "Easy Run" : "Long Run"; // wk15 is a 3km shakeout
+      sessions.push(runSession(2, w, longType, WED_LONG[weekNumber], "long"));
+    } else {
+      sessions.push(staticSession(2, w, "Upper Body (Gym)", "45 min", "gym",
+        "Bench press, bent-over rows, overhead press, pull-ups. Finish with 10 minutes of core work."));
+    }
+
+    // Thursday — rest (doubles as long-run flex day from wk 7)
+    sessions.push(staticSession(3, w, "Rest", "—", "rest",
+      has3Runs
+        ? "Rest day. Or run your long run here instead of Wednesday if the week needs the flexibility."
+        : "Full rest. Recovery is where the adaptation happens."));
+
+    // Friday — lighter legs
+    sessions.push(staticSession(4, w, "Legs (Gym)", "40 min", "gym",
+      "Lighter leg session ahead of Saturday's run. Lunges, step-ups, Bulgarian split squats, calf raises. Keep it moderate."));
+
+    // Saturday — easy run, or rest in race week
+    const satKm = SAT_KM[w];
+    if (satKm > 0) {
+      sessions.push(runSession(5, w, "Easy Run", satKm, "saturday"));
+    } else {
+      sessions.push(staticSession(5, w, "Rest", "—", "rest",
+        "Rest — keep the legs fresh. Race tomorrow: hydrate, eat well, lay out your kit."));
+    }
+
+    // Sunday — rest, or the race in week 15
+    if (weekNumber === 15) {
+      const dateStr = isoDate(monMs + 6 * DAY_MS);
+      sessions.push({
+        dayOfWeek: "Sunday", date: dateStr, type: "Race",
+        distance: "21.1km", duration: "~2:17", pace: PACE_GUIDE["Race"].range,
+        description: `🏆 THE BIG HALF. First 5km should feel almost too easy — even splits win races. Trust your training. Target pace: ${PACE_GUIDE["Race"].range}.`,
+        intensity: "race",
+      });
+    } else {
+      sessions.push(staticSession(6, w, "Rest", "—", "rest",
+        "Rest and recover. Prepare mentally for the week ahead."));
+    }
+
+    // totalKm = running distance for the week, excluding the race itself
+    const totalKm = sessions
+      .filter(s => ["low", "medium", "high"].includes(s.intensity))
+      .reduce((sum, s) => sum + (parseFloat(s.distance) || 0), 0);
+
+    weeks.push({
+      weekNumber,
+      dateRange: `${prettyDate(monMs)} – ${prettyDate(monMs + 6 * DAY_MS)}`,
+      theme: WEEK_THEMES[w],
+      totalKm,
+      sessions,
+    });
+  }
+  return { weeks };
+}
+
 // ── App ──────────────────────────────────────────────────────────────────────
 export default function App() {
   const [screen,     setScreen]     = useState("loading");
@@ -222,84 +368,11 @@ export default function App() {
   }
 
   // ── Plan generation ──────────────────────────────────────────────────────
-  async function genPlan() {
+  // Built locally and deterministically — no API key or network required.
+  function genPlan() {
     setErr(false);
-    setScreen("generating");
-    ["Mapping your schedule…", "Building Tuesday progression…",
-     "Calibrating 2:13–2:21 paces…", "Integrating cycle tracking…",
-     "Adding week 7 long run transition…"]
-      .forEach((m, i) => setTimeout(() => setGm(m), i * 2600));
-
-    const prompt = `Generate a complete 15-week half marathon training plan.
-
-ATHLETE: Intermediate runner. Target finish: 2 hours 13 min – 2 hours 21 min (race pace 6:18–6:41/km).
-Race: The Big Half London, Sunday 6 September 2026. Plan starts Monday 25 May 2026.
-
-WEEKLY STRUCTURE:
-
-WEEKS 1–6 (2 running days):
-- Monday: Legs (Gym) — heavy compound ~60 min (squats, deadlifts, leg press, lunges, RDLs)
-- Tuesday: RUNNING — key mid-week run. Starts 5km, builds each week. Easy effort wks 1–3, introduce tempo from wk 4.
-- Wednesday: Upper Body (Gym) — ~45 min (bench, rows, OHP, pull-ups, core)
-- Thursday: Rest — full recovery
-- Friday: Legs (Gym) — lighter ~40 min (lunges, step-ups, Bulgarians, calf raises). Keep moderate — run tomorrow.
-- Saturday: Easy Run 5km — her regular Saturday run. Keep at 5km every week. Easy conversational pace.
-- Sunday: Rest
-
-WEEKS 7–15 (3 running days — long run added Wednesday from wk 7, can flex to Thursday):
-- Monday: Legs (Gym) — heavy compound ~60 min
-- Tuesday: RUNNING — shorter run (easy or tempo, 5–8km). This is NOT the long run.
-- Wednesday: RUNNING — Long Run day. Starts 12km wk 7, builds to 19km peak wk 12, tapers after. Description must note "Flexible — shift to Thursday if needed."
-- Thursday: Rest — note in description "Or do your long run here instead of Wednesday"
-- Friday: Legs (Gym) — lighter ~40 min
-- Saturday: Easy Run 5km (wks 7–12), 4km (wk 13), 3km (wk 14), Rest (wk 15 — legs fresh for race)
-- Sunday: Rest
-
-PACE TARGETS — include in each run session description:
-- Easy Run: 7:10–7:30/km | Long Run: 7:00–7:20/km | Tempo: 6:00–6:20/km | Intervals: 5:35–5:55/km | Race: 6:18–6:41/km
-
-TUESDAY RUN PROGRESSION:
-Wk1=5km easy, Wk2=5km easy, Wk3=6km easy, Wk4=5km easy (cutback), Wk5=7km easy, Wk6=8km tempo,
-Wk7=6km easy, Wk8=5km easy (cutback), Wk9=8km tempo, Wk10=8km intervals, Wk11=10km tempo, Wk12=8km easy,
-Wk13=6km easy (taper), Wk14=5km easy (taper), Wk15=3km easy (race prep)
-
-WEDNESDAY LONG RUN (wks 7–15):
-Wk7=12km, Wk8=9km, Wk9=14km, Wk10=16km, Wk11=18km, Wk12=19km, Wk13=14km, Wk14=8km, Wk15=3km easy
-
-RUNNING TOTALS: Wk1=10, Wk2=10, Wk3=11, Wk4=10, Wk5=12, Wk6=13, Wk7=23, Wk8=19, Wk9=27, Wk10=29, Wk11=33, Wk12=32, Wk13=23, Wk14=16, Wk15=~6+race
-
-PERIOD NOTES — add to description where dates overlap:
-Period 1: Jun 8–13 | Period 2: Jul 2–7 | Period 3: Jul 26–31 | Period 4: Aug 19–24
-Days 1–2: reduce intensity 15%, prioritise iron + hydration. Days 3–6: energy returning, trust the training.
-
-CUTBACK WEEKS: 4, 8, 12
-
-RETURN ONLY RAW VALID JSON — no markdown, no code fences. Structure:
-{"weeks":[{"weekNumber":1,"dateRange":"25 May – 31 May","theme":"Foundation","totalKm":10,"sessions":[
-{"dayOfWeek":"Monday","date":"2026-05-25","type":"Legs (Gym)","distance":"—","duration":"60 min","pace":"—","description":"Heavy compound leg day. Squats, deadlifts, leg press, lunges, Romanian deadlifts. Warm up well — big week of training ahead.","intensity":"gym"},
-{"dayOfWeek":"Tuesday","date":"2026-05-26","type":"Easy Run","distance":"5km","duration":"32 min","pace":"7:10–7:30/km","description":"Your key mid-week run starts here — this is the session that builds every week. Easy conversational effort throughout. Target pace: 7:10–7:30/km for your 2:13–2:21 goal.","intensity":"low"},
-{"dayOfWeek":"Wednesday","date":"2026-05-27","type":"Upper Body (Gym)","distance":"—","duration":"45 min","pace":"—","description":"Bench press, bent-over rows, overhead press, pull-ups. Finish with 10 minutes of core work.","intensity":"gym"},
-{"dayOfWeek":"Thursday","date":"2026-05-28","type":"Rest","distance":"—","duration":"—","pace":"—","description":"Full rest. Recovery is where the adaptation happens.","intensity":"rest"},
-{"dayOfWeek":"Friday","date":"2026-05-29","type":"Legs (Gym)","distance":"—","duration":"40 min","pace":"—","description":"Lighter leg session ahead of Saturday's run. Lunges, step-ups, Bulgarian split squats, calf raises. Keep it moderate.","intensity":"gym"},
-{"dayOfWeek":"Saturday","date":"2026-05-30","type":"Easy Run","distance":"5km","duration":"30 min","pace":"7:10–7:30/km","description":"Your regular Saturday 5km. This never changes — it is your consistency anchor. Easy enjoyable effort. Target pace: 7:10–7:30/km.","intensity":"low"},
-{"dayOfWeek":"Sunday","date":"2026-05-31","type":"Rest","distance":"—","duration":"—","pace":"—","description":"Rest and recover. Prepare mentally for the week ahead.","intensity":"rest"}
-]}]}
-
-Accurate dates: W1 Mon=2026-05-25, W2=2026-06-01, W3=2026-06-08, W4=2026-06-15, W5=2026-06-22, W6=2026-06-29, W7=2026-07-06, W8=2026-07-13, W9=2026-07-20, W10=2026-07-27, W11=2026-08-03, W12=2026-08-10, W13=2026-08-17, W14=2026-08-24, W15=2026-08-31. Generate all 15 weeks fully.`;
-
     try {
-      const res = await fetch("/api/claude", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          model: "claude-sonnet-4-20250514",
-          max_tokens: 14000,
-          messages: [{ role: "user", content: prompt }],
-        }),
-      });
-      const d = await res.json();
-      const t = d.content?.find(b => b.type === "text")?.text || "";
-      const p = JSON.parse(t.replace(/```json|```/g, "").trim());
+      const p = buildPlan();
       setPlan(p);
       setSw(cw);
       localStorage.setItem(STORAGE_KEY, JSON.stringify({ plan: p, completed: {}, quizzes: {} }));
@@ -307,6 +380,7 @@ Accurate dates: W1 Mon=2026-05-25, W2=2026-06-01, W3=2026-06-08, W4=2026-06-15, 
     } catch (e) {
       console.error(e);
       setErr(true);
+      setScreen("generating");
       setGm("Something went wrong — tap Retry.");
     }
   }
