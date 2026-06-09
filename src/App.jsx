@@ -15,6 +15,35 @@ const PACE_GUIDE = {
   "Race":      { range:"6:18–6:41/km", tip:"First 5km should feel almost too easy. Even splits win races." },
 };
 
+
+// ── Training milestones ───────────────────────────────────────────────────────
+const MILESTONES = {
+  6: {
+    emoji: "👟",
+    title: "Time to buy your race day trainers",
+    body: "Head to a running store this week for a proper gait analysis. You need 6–8 weeks to break new shoes in before race day — don't leave it later. Bring your old pair so staff can assess your wear pattern.",
+    color: "#FBBF24",
+    bg: "rgba(251,191,36,0.07)",
+    border: "rgba(251,191,36,0.2)",
+  },
+  7: {
+    emoji: "🧂",
+    title: "Introduce electrolytes on long runs",
+    body: "Long runs start this week. Add electrolyte tabs (e.g. SiS, Nuun, or High5) to your water on any run over 45 minutes. This also primes your gut for race nutrition.",
+    color: "#60A5FA",
+    bg: "rgba(96,165,250,0.07)",
+    border: "rgba(96,165,250,0.2)",
+  },
+  9: {
+    emoji: "🍯",
+    title: "Start practising with energy gels",
+    body: "Your long runs are now 14km+ (~90 min on your feet). Take a gel at 45–50 min in. Use the same brand you plan to use on race day — never try anything new on the start line.",
+    color: "#F97316",
+    bg: "rgba(249,115,22,0.07)",
+    border: "rgba(249,115,22,0.2)",
+  },
+};
+
 // Period tracking (24-day cycle, 6-day period, first period Jun 8)
 const PERIODS = [
   { start: new Date("2026-06-08"), end: new Date("2026-06-13"), num: 1 },
@@ -367,6 +396,16 @@ export default function App() {
     setQuizSess(null);
   }
 
+
+  // Auto-sync Strava on load (once, when both plan and strava token are ready)
+  const autoSyncedRef = useRef(false);
+  useEffect(() => {
+    if (plan && strava && !autoSyncedRef.current) {
+      autoSyncedRef.current = true;
+      syncStrava();
+    }
+  }, [plan, strava]);
+
   // ── Plan generation ──────────────────────────────────────────────────────
   // Built locally and deterministically — no API key or network required.
   function genPlan() {
@@ -398,10 +437,40 @@ export default function App() {
     if (!strava?.token) return;
     setStravaSync("syncing");
 
+    // ── Refresh token if expired or expiring in <5 min ──────────────────────
+    let activeToken = strava.token;
+    const nowSec = Math.floor(Date.now() / 1000);
+    if (strava.expires && parseInt(strava.expires) < nowSec + 300) {
+      try {
+        const refreshRes = await fetch(`/api/strava-refresh?refresh_token=${encodeURIComponent(strava.refresh)}`);
+        if (refreshRes.ok) {
+          const newTokenData = await refreshRes.json();
+          const updatedStrava = {
+            ...strava,
+            token:   newTokenData.access_token,
+            expires: newTokenData.expires_at,
+            refresh: newTokenData.refresh_token,
+          };
+          localStorage.setItem("strava", JSON.stringify(updatedStrava));
+          setStrava(updatedStrava);
+          activeToken = newTokenData.access_token;
+        } else {
+          localStorage.removeItem("strava");
+          setStrava(null);
+          setStravaSync("error");
+          return;
+        }
+      } catch (e) {
+        console.error("Strava token refresh failed:", e);
+        setStravaSync("error");
+        return;
+      }
+    }
+
     try {
       const after  = Math.floor(START_DATE.getTime() / 1000);
       const before = Math.floor(Date.now() / 1000);
-      const res    = await fetch(`/api/strava-activities?token=${strava.token}&after=${after}&before=${before}`);
+      const res    = await fetch(`/api/strava-activities?token=${activeToken}&after=${after}&before=${before}`);
 
       if (res.status === 401) {
         localStorage.removeItem("strava");
@@ -644,7 +713,7 @@ function Dashboard({ plan, sw, setSw, cw, dtr, completed, quizzes, onToggle, str
 
         {/* Legend */}
         <div style={{ display: "flex", gap: 12, marginTop: 9, overflowX: "auto" }}>
-          {[["#4ADE80","Running"],["#818CF8","Gym"],["#EC4899","Period"],["#FC4C02","Strava"]].map(([c, l]) => (
+          {[["#4ADE80","Running"],["#818CF8","Gym"],["#EC4899","Period"]].map(([c, l]) => (
             <div key={l} style={{ display: "flex", alignItems: "center", gap: 4, flexShrink: 0 }}>
               <div style={{ width: 6, height: 6, borderRadius: "50%", background: c }} />
               <span style={{ fontSize: 10, color: "#4B5563" }}>{l}</span>
@@ -721,6 +790,17 @@ function Dashboard({ plan, sw, setSw, cw, dtr, completed, quizzes, onToggle, str
                 ))}
             </div>
           </div>
+
+          {/* Milestone reminder */}
+          {MILESTONES[sw] && (
+            <div style={{ marginBottom: 12, padding: "12px 14px", background: MILESTONES[sw].bg, border: `1px solid ${MILESTONES[sw].border}`, borderRadius: 10, display: "flex", gap: 11, alignItems: "flex-start" }}>
+              <span style={{ fontSize: 20, flexShrink: 0 }}>{MILESTONES[sw].emoji}</span>
+              <div>
+                <div style={{ fontSize: 12, fontWeight: 700, color: MILESTONES[sw].color, marginBottom: 3 }}>{MILESTONES[sw].title}</div>
+                <div style={{ fontSize: 11, color: "#6B7280", lineHeight: 1.55 }}>{MILESTONES[sw].body}</div>
+              </div>
+            </div>
+          )}
 
           {/* Sessions */}
           <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
@@ -928,6 +1008,14 @@ function QuizModal({ session, onSubmit, onClose }) {
           </div>
           <textarea value={notes} onChange={e => setNotes(e.target.value)} placeholder="Anything worth remembering…" rows={2}
             style={{ width: "100%", background: "#0D1219", border: "1px solid rgba(255,255,255,.1)", borderRadius: 8, padding: "9px 12px", fontSize: 13, color: "#E2DDD6", fontFamily: "DM Sans,sans-serif", resize: "none", outline: "none" }} />
+        </div>
+
+        {/* Reschedule note */}
+        <div style={{ marginBottom: 12, display: "flex", alignItems: "center", gap: 8 }}>
+          <input type="checkbox" id="rescheduled" checked={notes.startsWith("🔄")}
+            onChange={e => setNotes(e.target.checked ? "🔄 Did this on a different day — " + notes.replace(/^🔄 Did this on a different day — /, "") : notes.replace(/^🔄 Did this on a different day — /, ""))}
+            style={{ accentColor: "#E84A00", width: 15, height: 15, cursor: "pointer" }} />
+          <label htmlFor="rescheduled" style={{ fontSize: 12, color: "#6B7280", cursor: "pointer" }}>I did this on a different day</label>
         </div>
 
         <button className="btn" style={{ width: "100%", justifyContent: "center", padding: 14 }}
