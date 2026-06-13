@@ -57,21 +57,21 @@ function getPeriodWeeks(periods) {
 }
 
 const MILESTONES = {
-  6: { emoji:"👟", title:"Time to buy your race day trainers", color:"#FBBF24", bg:"rgba(251,191,36,0.07)", border:"rgba(251,191,36,0.2)",
+  6: { emoji:"👟", title:"Time to buy your race day trainers", color:"#D97706", bg:"rgba(217,119,6,0.06)", border:"rgba(217,119,6,0.2)",
     body:"Head to a running store for a gait analysis. You need 6–8 weeks to break them in before race day." },
-  7: { emoji:"🧂", title:"Introduce electrolytes on long runs", color:"#60A5FA", bg:"rgba(96,165,250,0.07)", border:"rgba(96,165,250,0.2)",
+  7: { emoji:"🧂", title:"Introduce electrolytes on long runs", color:"#2563EB", bg:"rgba(37,99,235,0.06)", border:"rgba(37,99,235,0.2)",
     body:"Long runs start this week. Add electrolyte tabs to your water on any run over 45 minutes." },
-  9: { emoji:"🍯", title:"Start practising with energy gels", color:"#F97316", bg:"rgba(249,115,22,0.07)", border:"rgba(249,115,22,0.2)",
+  9: { emoji:"🍯", title:"Start practising with energy gels", color:"#D97706", bg:"rgba(217,119,6,0.06)", border:"rgba(217,119,6,0.2)",
     body:"14km+ runs mean 90+ min on your feet. Take a gel at 45–50 min in. Always use race-day brands in training." },
 };
 
 const INT = {
-  low:    { l:"Easy",     c:"#4ADE80", bg:"rgba(74,222,128,0.08)",  b:"rgba(74,222,128,0.2)"  },
-  medium: { l:"Tempo",    c:"#FB923C", bg:"rgba(251,146,60,0.08)",  b:"rgba(251,146,60,0.2)"  },
-  high:   { l:"Hard",     c:"#F87171", bg:"rgba(248,113,113,0.08)", b:"rgba(248,113,113,0.2)" },
-  gym:    { l:"Strength", c:"#818CF8", bg:"rgba(129,140,248,0.08)", b:"rgba(129,140,248,0.2)" },
-  rest:   { l:"Rest",     c:"#1F2937", bg:"rgba(45,55,72,0.05)",    b:"rgba(45,55,72,0.1)"    },
-  race:   { l:"Race Day", c:"#FBBF24", bg:"rgba(251,191,36,0.1)",   b:"rgba(251,191,36,0.35)" },
+  low:    { l:"Easy",     c:"#16A34A", bg:"rgba(22,163,74,0.08)",    b:"rgba(22,163,74,0.2)"    },
+  medium: { l:"Tempo",    c:"#D97706", bg:"rgba(217,119,6,0.08)",    b:"rgba(217,119,6,0.2)"    },
+  high:   { l:"Hard",     c:"#DC2626", bg:"rgba(220,38,38,0.08)",    b:"rgba(220,38,38,0.2)"    },
+  gym:    { l:"Strength", c:"#7C3AED", bg:"rgba(124,58,237,0.08)",   b:"rgba(124,58,237,0.2)"   },
+  rest:   { l:"Rest",     c:"#94A3B8", bg:"rgba(148,163,184,0.06)",  b:"rgba(148,163,184,0.15)" },
+  race:   { l:"Race Day", c:"#2563EB", bg:"rgba(37,99,235,0.1)",     b:"rgba(37,99,235,0.35)"   },
 };
 const ICON = {
   "Easy Run":"🏃","Tempo Run":"⚡","Long Run":"🛣️","Intervals":"💥",
@@ -100,9 +100,9 @@ function parsePaceToMin(paceStr) {
 const CSS = `
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&display=swap');
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'DM Sans',sans-serif;background:#070A0E;color:#fff;-webkit-tap-highlight-color:transparent}
+body{font-family:'DM Sans',sans-serif;background:#F8FAFC;color:#0F172A;-webkit-tap-highlight-color:transparent}
 ::-webkit-scrollbar{width:3px;height:3px}
-::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:2px}
+::-webkit-scrollbar-thumb{background:rgba(15,23,42,.14);border-radius:2px}
 @keyframes spin{to{transform:rotate(360deg)}}
 @keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 @keyframes slideUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
@@ -112,26 +112,26 @@ body{font-family:'DM Sans',sans-serif;background:#070A0E;color:#fff;-webkit-tap-
 .dn{font-family:'Bebas Neue',sans-serif;letter-spacing:.06em}
 .fi{animation:fi .25s ease forwards}
 .su{animation:slideUp .3s ease forwards}
-.btn{background:#E84A00;color:#fff;border:none;border-radius:12px;padding:14px 24px;
+.btn{background:#2563EB;color:#fff;border:none;border-radius:12px;padding:14px 24px;
   font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;
   transition:all .2s;display:inline-flex;align-items:center;gap:8px;letter-spacing:.01em}
-.btn:hover{background:#C94000;transform:translateY(-1px);box-shadow:0 8px 24px rgba(232,74,0,.25)}
+.btn:hover{background:#1D4ED8;transform:translateY(-1px);box-shadow:0 8px 24px rgba(37,99,235,.3)}
 .btn:disabled{opacity:.35;cursor:not-allowed;transform:none;box-shadow:none}
-.btn-ghost{background:transparent;color:rgba(255,255,255,.4);border:1px solid rgba(255,255,255,.1);
+.btn-ghost{background:transparent;color:rgba(15,23,42,.45);border:1px solid rgba(15,23,42,.12);
   border-radius:10px;padding:8px 14px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;
   cursor:pointer;transition:all .2s}
-.btn-ghost:hover{background:rgba(255,255,255,.06);color:#fff;border-color:rgba(255,255,255,.2)}
-.wchip{background:transparent;border:1px solid rgba(255,255,255,.08);border-radius:8px;
-  padding:5px 11px;font-size:11px;font-weight:500;color:rgba(255,255,255,.35);cursor:pointer;
+.btn-ghost:hover{background:rgba(15,23,42,.04);color:#0F172A;border-color:rgba(15,23,42,.22)}
+.wchip{background:#fff;border:1px solid rgba(15,23,42,.1);border-radius:8px;
+  padding:5px 11px;font-size:11px;font-weight:500;color:rgba(15,23,42,.45);cursor:pointer;
   white-space:nowrap;transition:all .18s;font-family:'DM Sans',sans-serif}
-.wchip:hover{border-color:rgba(232,74,0,.3);color:rgba(255,255,255,.7)}
-.wchip.on{background:rgba(232,74,0,.12);border-color:rgba(232,74,0,.45);color:#E84A00;font-weight:700}
-.opt{border:1px solid rgba(255,255,255,.1);background:transparent;border-radius:8px;
-  padding:7px 13px;font-size:13px;color:rgba(255,255,255,.45);cursor:pointer;transition:all .18s;
+.wchip:hover{border-color:rgba(37,99,235,.35);color:rgba(15,23,42,.75)}
+.wchip.on{background:#EFF6FF;border-color:#2563EB;color:#2563EB;font-weight:700}
+.opt{border:1px solid rgba(15,23,42,.1);background:transparent;border-radius:8px;
+  padding:7px 13px;font-size:13px;color:rgba(15,23,42,.5);cursor:pointer;transition:all .18s;
   font-family:'DM Sans',sans-serif;white-space:nowrap}
-.opt:hover{border-color:rgba(232,74,0,.3);color:#fff}
-.opt.sel{border-color:#E84A00;background:rgba(232,74,0,.1);color:#E84A00;font-weight:600}
-.divider{height:1px;background:rgba(255,255,255,.05);margin:0 16px}
+.opt:hover{border-color:rgba(37,99,235,.3);color:#0F172A}
+.opt.sel{border-color:#2563EB;background:#EFF6FF;color:#2563EB;font-weight:600}
+.divider{height:1px;background:rgba(15,23,42,.06);margin:0 16px}
 `;
 
 // ── Plan builder ──────────────────────────────────────────────────────────────
@@ -157,6 +157,7 @@ const INTENSITY = {"Easy Run":"low","Long Run":"low","Tempo Run":"medium","Inter
 
 const isoDate    = ms => new Date(ms).toISOString().split("T")[0];
 const prettyDate = ms => { const d = new Date(ms); return `${d.getUTCDate()} ${MON_ABBR[d.getUTCMonth()]}`; };
+const shortDateStr = dateStr => { const d = new Date(dateStr); return `${d.getUTCDate()} ${MON_ABBR[d.getUTCMonth()]}`; };
 const estDuration = (type,km) => `${Math.round(km*(PACE_MID_MIN[type]||7))} min`;
 
 function periodNote(dateStr, periods) {
@@ -334,7 +335,6 @@ export default function App() {
       ...p, start:p.start.toISOString(), end:p.end.toISOString()
     }))));
     setPeriods(newPeriods);
-    // Regenerate plan with new periods
     const newPlan = buildPlan(newPeriods);
     setPlan(newPlan);
     saveLocal(newPlan, null, null);
@@ -368,7 +368,6 @@ export default function App() {
 
       const activities = await res.json();
 
-      // Build date → activity map
       const runsByDate = {};
       for (const act of activities) {
         if (act.type==="Run"||act.sport_type==="Run") {
@@ -381,7 +380,6 @@ export default function App() {
         }
       }
 
-      // Match with ±2 day window — so runs on any nearby day still tick off the planned session
       const nc={...completed}, nq={...quizzes};
       let matched=0;
 
@@ -476,12 +474,12 @@ export default function App() {
 // ── Generating ────────────────────────────────────────────────────────────────
 function Generating({ onRetry }) {
   return (
-    <div style={{minHeight:"100vh",background:"#070A0E",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",gap:24}}>
-      <div className="dn" style={{fontSize:44,color:"#E84A00",textAlign:"center",lineHeight:1.1}}>BUILDING YOUR<br/>TRAINING PLAN</div>
-      <div style={{width:200,height:2,background:"rgba(255,255,255,.07)",borderRadius:2,overflow:"hidden",position:"relative"}}>
-        <div style={{position:"absolute",height:"100%",width:"50%",background:"#E84A00",borderRadius:2,animation:"bar 1.9s ease-in-out infinite"}} />
+    <div style={{minHeight:"100vh",background:"#F8FAFC",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",gap:24}}>
+      <div className="dn" style={{fontSize:44,color:"#2563EB",textAlign:"center",lineHeight:1.1}}>BUILDING YOUR<br/>TRAINING PLAN</div>
+      <div style={{width:200,height:2,background:"rgba(15,23,42,.08)",borderRadius:2,overflow:"hidden",position:"relative"}}>
+        <div style={{position:"absolute",height:"100%",width:"50%",background:"#2563EB",borderRadius:2,animation:"bar 1.9s ease-in-out infinite"}} />
       </div>
-      <div style={{fontSize:12,color:"rgba(255,255,255,.3)",animation:"pulse 1.6s ease infinite"}}>Mapping your 15-week schedule…</div>
+      <div style={{fontSize:12,color:"rgba(15,23,42,.35)",animation:"pulse 1.6s ease infinite"}}>Mapping your 15-week schedule…</div>
       {onRetry && <button className="btn" onClick={onRetry} style={{marginTop:8}}>Retry →</button>}
     </div>
   );
@@ -502,18 +500,15 @@ function Dashboard({ plan, sw, setSw, cw, dtr, completed, quizzes, onToggle, str
   const wkRunDone = wkRuns.filter(s=>completed[s.date]).length;
   const wkGymDone = wkGym.filter(s=>completed[s.date]).length;
 
-  // Actual km this week from Strava/manual
   const wkActualKm = wkRuns.filter(s=>completed[s.date]).reduce((sum,s)=>{
     const dist = quizzes[s.date]?.dist;
     if (dist) return sum+(parseFloat(dist)||0);
     return sum+(parseFloat(s.distance)||0);
   },0);
 
-  // Today's session
   const todayStr = new Date().toISOString().split("T")[0];
   const todaySession = plan?.weeks.flatMap(w=>w.sessions).find(s=>s.date===todayStr);
 
-  // Pace data for chart
   const paceData = allRuns
     .filter(s=>completed[s.date]&&quizzes[s.date]?.pace)
     .map(s=>({ date:s.date, pace:parsePaceToMin(quizzes[s.date].pace), label:s.type }))
@@ -526,19 +521,20 @@ function Dashboard({ plan, sw, setSw, cw, dtr, completed, quizzes, onToggle, str
   }, [sw]);
 
   return (
-    <div style={{background:"#070A0E",minHeight:"100vh",maxWidth:700,margin:"0 auto",paddingBottom:160}}>
+    <div style={{background:"#F8FAFC",minHeight:"100vh",maxWidth:700,margin:"0 auto",paddingBottom:160}}>
 
       {/* ── Sticky header ── */}
-      <div style={{position:"sticky",top:0,background:"#070A0E",zIndex:10,padding:"16px 16px 0",borderBottom:"1px solid rgba(255,255,255,.05)"}}>
+      <div style={{position:"sticky",top:0,background:"#fff",zIndex:10,padding:"16px 16px 0",
+        borderBottom:"1px solid rgba(15,23,42,.07)",boxShadow:"0 1px 12px rgba(15,23,42,.05)"}}>
         <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:12}}>
           <div>
-            <div className="dn" style={{fontSize:28,color:"#E84A00",lineHeight:1,letterSpacing:".08em"}}>THE BIG HALF</div>
-            <div style={{fontSize:10,color:"rgba(255,255,255,.25)",marginTop:2,letterSpacing:".12em",textTransform:"uppercase"}}>London · 6 Sep 2026</div>
+            <div className="dn" style={{fontSize:28,color:"#2563EB",lineHeight:1,letterSpacing:".08em"}}>THE BIG HALF</div>
+            <div style={{fontSize:10,color:"rgba(15,23,42,.35)",marginTop:2,letterSpacing:".12em",textTransform:"uppercase"}}>London · 6 Sep 2026</div>
           </div>
           <div style={{display:"flex",gap:8,alignItems:"center"}}>
-            <div style={{textAlign:"center",background:"rgba(232,74,0,.1)",border:"1px solid rgba(232,74,0,.2)",borderRadius:10,padding:"5px 13px"}}>
-              <div className="dn" style={{fontSize:24,color:"#E84A00",lineHeight:1}}>{dtr}</div>
-              <div style={{fontSize:8,color:"rgba(255,255,255,.3)",textTransform:"uppercase",letterSpacing:".1em"}}>days</div>
+            <div style={{textAlign:"center",background:"#EFF6FF",border:"1px solid rgba(37,99,235,.2)",borderRadius:10,padding:"5px 13px"}}>
+              <div className="dn" style={{fontSize:24,color:"#2563EB",lineHeight:1}}>{dtr}</div>
+              <div style={{fontSize:8,color:"rgba(15,23,42,.35)",textTransform:"uppercase",letterSpacing:".1em"}}>days</div>
             </div>
             <button className="btn-ghost" style={{padding:"7px 9px",fontSize:13}} onClick={onOpenSettings} title="Settings">⚙</button>
           </div>
@@ -547,20 +543,20 @@ function Dashboard({ plan, sw, setSw, cw, dtr, completed, quizzes, onToggle, str
         {/* Overall progress bar */}
         <div style={{marginBottom:12}}>
           <div style={{display:"flex",justifyContent:"space-between",marginBottom:5}}>
-            <span style={{fontSize:10,color:"rgba(255,255,255,.25)",textTransform:"uppercase",letterSpacing:".08em"}}>Run sessions</span>
-            <span style={{fontSize:10,color:"rgba(255,255,255,.4)"}}>{doneRuns.length}/{allRuns.length} · {pct}%</span>
+            <span style={{fontSize:10,color:"rgba(15,23,42,.35)",textTransform:"uppercase",letterSpacing:".08em"}}>Run sessions</span>
+            <span style={{fontSize:10,color:"rgba(15,23,42,.5)"}}>{doneRuns.length}/{allRuns.length} · {pct}%</span>
           </div>
-          <div style={{height:2,background:"rgba(255,255,255,.06)",borderRadius:1}}>
-            <div style={{height:"100%",width:`${pct}%`,background:"#E84A00",borderRadius:1,transition:"width .5s"}} />
+          <div style={{height:3,background:"rgba(15,23,42,.07)",borderRadius:2}}>
+            <div style={{height:"100%",width:`${pct}%`,background:"#2563EB",borderRadius:2,transition:"width .5s"}} />
           </div>
         </div>
 
         {/* Legend */}
         <div style={{display:"flex",gap:14,marginBottom:10}}>
-          {[["#4ADE80","Running"],["#818CF8","Gym"],["#EC4899","Period"]].map(([c,l])=>(
+          {[["#16A34A","Running"],["#7C3AED","Gym"],["#EC4899","Period"]].map(([c,l])=>(
             <div key={l} style={{display:"flex",alignItems:"center",gap:4}}>
               <div style={{width:5,height:5,borderRadius:"50%",background:c}} />
-              <span style={{fontSize:10,color:"rgba(255,255,255,.3)"}}>{l}</span>
+              <span style={{fontSize:10,color:"rgba(15,23,42,.35)"}}>{l}</span>
             </div>
           ))}
         </div>
@@ -570,11 +566,11 @@ function Dashboard({ plan, sw, setSw, cw, dtr, completed, quizzes, onToggle, str
           {plan.weeks.map(w=>(
             <button key={w.weekNumber} className={`wchip ${sw===w.weekNumber?"on":""}`}
               onClick={()=>setSw(w.weekNumber)}
-              style={{position:"relative",borderColor:sw===w.weekNumber?undefined:periodWeeks.has(w.weekNumber)?"rgba(236,72,153,.2)":undefined}}>
+              style={{position:"relative",borderColor:sw===w.weekNumber?undefined:periodWeeks.has(w.weekNumber)?"rgba(236,72,153,.25)":undefined}}>
               W{w.weekNumber}
-              {w.weekNumber===cw && <span style={{color:"#FBBF24",fontSize:7,marginLeft:2}}>●</span>}
+              {w.weekNumber===cw && <span style={{color:"#D97706",fontSize:7,marginLeft:2}}>●</span>}
               {periodWeeks.has(w.weekNumber)&&w.weekNumber!==cw && <span style={{color:"#EC4899",fontSize:7,marginLeft:2}}>●</span>}
-              {w.weekNumber===7 && <span style={{position:"absolute",top:-7,right:-3,fontSize:7,color:"#818CF8",fontWeight:700,background:"#070A0E",padding:"0 1px"}}>+3</span>}
+              {w.weekNumber===7 && <span style={{position:"absolute",top:-7,right:-3,fontSize:7,color:"#7C3AED",fontWeight:700,background:"#fff",padding:"0 1px"}}>+3</span>}
             </button>
           ))}
         </div>
@@ -591,14 +587,14 @@ function Dashboard({ plan, sw, setSw, cw, dtr, completed, quizzes, onToggle, str
           {/* Week header */}
           <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:14}}>
             <div>
-              <div style={{fontSize:17,fontWeight:700,letterSpacing:"-.01em"}}>
-                Week {wd.weekNumber} <span style={{color:"rgba(255,255,255,.3)",fontWeight:400}}>—</span> <span style={{color:"#E84A00"}}>{wd.theme}</span>
+              <div style={{fontSize:17,fontWeight:700,letterSpacing:"-.01em",color:"#0F172A"}}>
+                Week {wd.weekNumber} <span style={{color:"rgba(15,23,42,.25)",fontWeight:400}}>—</span> <span style={{color:"#2563EB"}}>{wd.theme}</span>
               </div>
-              <div style={{fontSize:11,color:"rgba(255,255,255,.25)",marginTop:2}}>{wd.dateRange}</div>
+              <div style={{fontSize:11,color:"rgba(15,23,42,.35)",marginTop:2}}>{wd.dateRange}</div>
             </div>
             <div style={{textAlign:"right"}}>
-              <div className="dn" style={{fontSize:30,color:"#fff",lineHeight:1}}>{wd.totalKm}km</div>
-              <div style={{fontSize:9,color:"rgba(255,255,255,.25)",textTransform:"uppercase",letterSpacing:".08em"}}>planned</div>
+              <div className="dn" style={{fontSize:30,color:"#0F172A",lineHeight:1}}>{wd.totalKm}km</div>
+              <div style={{fontSize:9,color:"rgba(15,23,42,.35)",textTransform:"uppercase",letterSpacing:".08em"}}>planned</div>
             </div>
           </div>
 
@@ -610,23 +606,25 @@ function Dashboard({ plan, sw, setSw, cw, dtr, completed, quizzes, onToggle, str
               {l:"Actual km",v:wkActualKm>0?`${wkActualKm.toFixed(1)}km`:"—"},
               {l:"Week",v:`${cw}/15`},
             ].map(({l,v})=>(
-              <div key={l} style={{background:"rgba(255,255,255,.03)",border:"1px solid rgba(255,255,255,.06)",borderRadius:10,padding:"10px 11px"}}>
-                <div style={{fontSize:9,color:"rgba(255,255,255,.3)",textTransform:"uppercase",letterSpacing:".08em",marginBottom:3}}>{l}</div>
-                <div style={{fontSize:15,fontWeight:700,color:"#fff"}}>{v}</div>
+              <div key={l} style={{background:"#fff",border:"1px solid rgba(15,23,42,.08)",borderRadius:10,padding:"10px 11px",
+                boxShadow:"0 1px 4px rgba(15,23,42,.04)"}}>
+                <div style={{fontSize:9,color:"rgba(15,23,42,.35)",textTransform:"uppercase",letterSpacing:".08em",marginBottom:3}}>{l}</div>
+                <div style={{fontSize:15,fontWeight:700,color:"#0F172A"}}>{v}</div>
               </div>
             ))}
           </div>
 
           {/* Weekly km progress bar */}
           {wkActualKm > 0 && (
-            <div style={{marginBottom:14,padding:"12px 14px",background:"rgba(255,255,255,.03)",border:"1px solid rgba(255,255,255,.06)",borderRadius:10}}>
+            <div style={{marginBottom:14,padding:"12px 14px",background:"#fff",border:"1px solid rgba(15,23,42,.08)",
+              borderRadius:10,boxShadow:"0 1px 4px rgba(15,23,42,.04)"}}>
               <div style={{display:"flex",justifyContent:"space-between",marginBottom:7}}>
-                <span style={{fontSize:10,color:"rgba(255,255,255,.35)",textTransform:"uppercase",letterSpacing:".07em"}}>Weekly km</span>
-                <span style={{fontSize:11,fontWeight:600,color:"#4ADE80"}}>{wkActualKm.toFixed(1)} / {wd.totalKm}km</span>
+                <span style={{fontSize:10,color:"rgba(15,23,42,.4)",textTransform:"uppercase",letterSpacing:".07em"}}>Weekly km</span>
+                <span style={{fontSize:11,fontWeight:600,color:"#16A34A"}}>{wkActualKm.toFixed(1)} / {wd.totalKm}km</span>
               </div>
-              <div style={{height:4,background:"rgba(255,255,255,.06)",borderRadius:2}}>
+              <div style={{height:4,background:"rgba(15,23,42,.06)",borderRadius:2}}>
                 <div style={{height:"100%",width:`${Math.min(100,(wkActualKm/wd.totalKm)*100)}%`,
-                  background:"linear-gradient(90deg,#4ADE80,#22D3EE)",borderRadius:2,transition:"width .5s"}} />
+                  background:"linear-gradient(90deg,#16A34A,#22D3EE)",borderRadius:2,transition:"width .5s"}} />
               </div>
             </div>
           )}
@@ -636,20 +634,20 @@ function Dashboard({ plan, sw, setSw, cw, dtr, completed, quizzes, onToggle, str
 
           {/* Banners */}
           {sw===7 && (
-            <div style={{marginBottom:12,padding:"11px 14px",background:"rgba(129,140,248,.06)",border:"1px solid rgba(129,140,248,.18)",borderRadius:10,display:"flex",gap:10}}>
+            <div style={{marginBottom:12,padding:"11px 14px",background:"rgba(124,58,237,.05)",border:"1px solid rgba(124,58,237,.15)",borderRadius:10,display:"flex",gap:10}}>
               <span style={{fontSize:16}}>🎯</span>
               <div>
-                <div style={{fontSize:12,fontWeight:700,color:"#818CF8",marginBottom:2}}>3 run days start here</div>
-                <div style={{fontSize:11,color:"rgba(255,255,255,.4)",lineHeight:1.5}}>Wednesday is now your long run. Shift to Thursday anytime based on how you feel.</div>
+                <div style={{fontSize:12,fontWeight:700,color:"#7C3AED",marginBottom:2}}>3 run days start here</div>
+                <div style={{fontSize:11,color:"rgba(15,23,42,.45)",lineHeight:1.5}}>Wednesday is now your long run. Shift to Thursday anytime based on how you feel.</div>
               </div>
             </div>
           )}
           {periodWeeks.has(sw) && (
-            <div style={{marginBottom:12,padding:"11px 14px",background:"rgba(236,72,153,.05)",border:"1px solid rgba(236,72,153,.15)",borderRadius:10,display:"flex",gap:10}}>
+            <div style={{marginBottom:12,padding:"11px 14px",background:"rgba(236,72,153,.04)",border:"1px solid rgba(236,72,153,.14)",borderRadius:10,display:"flex",gap:10}}>
               <span style={{fontSize:16}}>🌸</span>
               <div>
                 <div style={{fontSize:12,fontWeight:700,color:"#EC4899",marginBottom:2}}>Period week</div>
-                <div style={{fontSize:11,color:"rgba(255,255,255,.4)",lineHeight:1.5}}>Days 1–2: ease off 10–15%, prioritise iron and hydration. Strength returns from day 3.</div>
+                <div style={{fontSize:11,color:"rgba(15,23,42,.45)",lineHeight:1.5}}>Days 1–2: ease off 10–15%, prioritise iron and hydration. Strength returns from day 3.</div>
               </div>
             </div>
           )}
@@ -660,21 +658,21 @@ function Dashboard({ plan, sw, setSw, cw, dtr, completed, quizzes, onToggle, str
               <span style={{fontSize:20,flexShrink:0}}>{MILESTONES[sw].emoji}</span>
               <div>
                 <div style={{fontSize:12,fontWeight:700,color:MILESTONES[sw].color,marginBottom:3}}>{MILESTONES[sw].title}</div>
-                <div style={{fontSize:11,color:"rgba(255,255,255,.4)",lineHeight:1.55}}>{MILESTONES[sw].body}</div>
+                <div style={{fontSize:11,color:"rgba(15,23,42,.45)",lineHeight:1.55}}>{MILESTONES[sw].body}</div>
               </div>
             </div>
           )}
 
           {/* Pace reference */}
-          <div style={{marginBottom:14,padding:"11px 14px",background:"rgba(232,74,0,.04)",border:"1px solid rgba(232,74,0,.1)",borderRadius:10}}>
-            <div style={{fontSize:9,color:"rgba(255,255,255,.25)",textTransform:"uppercase",letterSpacing:".08em",marginBottom:7}}>Pace targets · 2:13–2:21 goal</div>
+          <div style={{marginBottom:14,padding:"11px 14px",background:"#EFF6FF",border:"1px solid rgba(37,99,235,.15)",borderRadius:10}}>
+            <div style={{fontSize:9,color:"rgba(37,99,235,.6)",textTransform:"uppercase",letterSpacing:".08em",marginBottom:7}}>Pace targets · 2:13–2:21 goal</div>
             <div style={{display:"flex",flexWrap:"wrap",gap:"5px 20px"}}>
               {Object.entries(PACE_GUIDE)
                 .filter(([k])=>wd.sessions.some(s=>s.type===k))
                 .map(([k,v])=>(
                   <div key={k} style={{display:"flex",alignItems:"center",gap:7}}>
-                    <span style={{fontSize:10,color:"rgba(255,255,255,.35)"}}>{k.replace(" Run","")}</span>
-                    <span style={{fontSize:13,fontWeight:700,color:"#fff"}}>{v.range}</span>
+                    <span style={{fontSize:10,color:"rgba(15,23,42,.4)"}}>{k.replace(" Run","")}</span>
+                    <span style={{fontSize:13,fontWeight:700,color:"#2563EB"}}>{v.range}</span>
                   </div>
                 ))}
             </div>
@@ -695,12 +693,12 @@ function Dashboard({ plan, sw, setSw, cw, dtr, completed, quizzes, onToggle, str
 
       {/* ── Footer ── */}
       <div style={{position:"fixed",bottom:0,left:"50%",transform:"translateX(-50%)",width:"100%",maxWidth:700,
-        padding:"10px 16px 22px",background:"linear-gradient(to top,#070A0E 60%,transparent)"}}>
+        padding:"10px 16px 22px",background:"linear-gradient(to top,#F8FAFC 65%,transparent)"}}>
         <div style={{marginBottom:8}}>
           {!strava ? (
             <button onClick={onConnectStrava}
-              style={{width:"100%",padding:"12px 0",background:"rgba(252,76,2,.08)",
-                border:"1px solid rgba(252,76,2,.25)",borderRadius:12,color:"#FC4C02",
+              style={{width:"100%",padding:"12px 0",background:"rgba(252,76,2,.06)",
+                border:"1px solid rgba(252,76,2,.22)",borderRadius:12,color:"#FC4C02",
                 fontFamily:"DM Sans,sans-serif",fontWeight:600,fontSize:13,cursor:"pointer",
                 display:"flex",alignItems:"center",justifyContent:"center",gap:8}}>
               <svg width="15" height="15" viewBox="0 0 24 24" fill="#FC4C02"><path d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.598h4.172L10.463 0l-7 13.828h4.169"/></svg>
@@ -709,9 +707,9 @@ function Dashboard({ plan, sw, setSw, cw, dtr, completed, quizzes, onToggle, str
           ) : (
             <div style={{display:"flex",gap:8}}>
               <button onClick={onSyncStrava} disabled={stravaSync==="syncing"}
-                style={{flex:1,padding:"11px 0",background:stravaSync==="done"?"rgba(74,222,128,.08)":"rgba(252,76,2,.08)",
-                  border:`1px solid ${stravaSync==="done"?"rgba(74,222,128,.25)":"rgba(252,76,2,.25)"}`,borderRadius:12,
-                  color:stravaSync==="done"?"#4ADE80":"#FC4C02",fontFamily:"DM Sans,sans-serif",fontWeight:600,fontSize:13,cursor:"pointer",transition:"all .2s"}}>
+                style={{flex:1,padding:"11px 0",background:stravaSync==="done"?"rgba(22,163,74,.07)":"rgba(252,76,2,.06)",
+                  border:`1px solid ${stravaSync==="done"?"rgba(22,163,74,.2)":"rgba(252,76,2,.22)"}`,borderRadius:12,
+                  color:stravaSync==="done"?"#16A34A":"#FC4C02",fontFamily:"DM Sans,sans-serif",fontWeight:600,fontSize:13,cursor:"pointer",transition:"all .2s"}}>
                 {stravaSync==="idle" && `⚡ Sync Strava · ${strava.athlete}${syncMsg?" · "+syncMsg:""}`}
                 {stravaSync==="syncing" && "⏳ Syncing…"}
                 {stravaSync==="done" && `✅ ${syncMsg||"Synced"}`}
@@ -736,21 +734,22 @@ function TodayCard({ session, onToggle }) {
   const pg   = PACE_GUIDE[session.type];
   return (
     <div style={{margin:"14px 16px 0",padding:"18px 18px 16px",
-      background:"linear-gradient(135deg,rgba(232,74,0,.12) 0%,rgba(232,74,0,.04) 100%)",
-      border:"1px solid rgba(232,74,0,.2)",borderRadius:14,animation:"fadeIn .3s ease"}}>
-      <div style={{fontSize:9,fontWeight:700,color:"#E84A00",textTransform:"uppercase",letterSpacing:".12em",marginBottom:8}}>Today</div>
+      background:"linear-gradient(135deg,#EFF6FF 0%,#DBEAFE 100%)",
+      border:"1px solid rgba(37,99,235,.2)",borderRadius:14,animation:"fadeIn .3s ease",
+      boxShadow:"0 2px 12px rgba(37,99,235,.1)"}}>
+      <div style={{fontSize:9,fontWeight:700,color:"#2563EB",textTransform:"uppercase",letterSpacing:".12em",marginBottom:8}}>Today · {shortDateStr(session.date)}</div>
       <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:12}}>
         <div>
-          <div style={{fontSize:22,fontWeight:700,letterSpacing:"-.02em",marginBottom:3}}>{session.type}</div>
-          <div style={{fontSize:11,color:"rgba(255,255,255,.45)"}}>{session.dayOfWeek}</div>
+          <div style={{fontSize:22,fontWeight:700,letterSpacing:"-.02em",marginBottom:3,color:"#0F172A"}}>{session.type}</div>
+          <div style={{fontSize:11,color:"rgba(15,23,42,.45)"}}>{session.dayOfWeek}</div>
         </div>
         <div style={{textAlign:"right"}}>
-          {session.distance!=="—" && <div className="dn" style={{fontSize:32,color:"#E84A00",lineHeight:1}}>{session.distance}</div>}
+          {session.distance!=="—" && <div className="dn" style={{fontSize:32,color:"#2563EB",lineHeight:1}}>{session.distance}</div>}
           <div style={{fontSize:9,fontWeight:700,color:cfg.c,background:cfg.bg,border:`1px solid ${cfg.b}`,
             padding:"2px 7px",borderRadius:4,textTransform:"uppercase",letterSpacing:".07em",display:"inline-block",marginTop:3}}>{cfg.l}</div>
         </div>
       </div>
-      {pg && <div style={{fontSize:11,color:"rgba(255,255,255,.4)",marginBottom:12}}>Target pace: <span style={{color:"#fff",fontWeight:600}}>{pg.range}</span></div>}
+      {pg && <div style={{fontSize:11,color:"rgba(15,23,42,.45)",marginBottom:12}}>Target pace: <span style={{color:"#2563EB",fontWeight:600}}>{pg.range}</span></div>}
       {isRun && (
         <button className="btn" style={{width:"100%",justifyContent:"center",padding:12,fontSize:13}} onClick={onToggle}>
           ✓ Mark run complete
@@ -781,35 +780,30 @@ function PaceChart({ data }) {
   const shortDate = s => { const d=new Date(s); return `${d.getDate()} ${MON[d.getMonth()]}`; };
 
   return (
-    <div style={{marginBottom:14,padding:"14px 14px 10px",background:"rgba(255,255,255,.03)",border:"1px solid rgba(255,255,255,.06)",borderRadius:10}}>
-      <div style={{fontSize:9,color:"rgba(255,255,255,.3)",textTransform:"uppercase",letterSpacing:".08em",marginBottom:10}}>Pace trend · last {data.length} runs</div>
+    <div style={{marginBottom:14,padding:"14px 14px 10px",background:"#fff",border:"1px solid rgba(15,23,42,.08)",
+      borderRadius:10,boxShadow:"0 1px 4px rgba(15,23,42,.04)"}}>
+      <div style={{fontSize:9,color:"rgba(15,23,42,.35)",textTransform:"uppercase",letterSpacing:".08em",marginBottom:10}}>Pace trend · last {data.length} runs</div>
       <svg viewBox={`0 0 ${W} ${H}`} style={{width:"100%",height:"auto",display:"block"}}>
-        {/* Grid lines */}
         {[minP+(maxP-minP)*0.25, minP+(maxP-minP)*0.5, minP+(maxP-minP)*0.75].map((v,i)=>(
-          <line key={i} x1={PAD.l} x2={W-PAD.r} y1={yScale(v)} y2={yScale(v)} stroke="rgba(255,255,255,.05)" strokeWidth="1" />
+          <line key={i} x1={PAD.l} x2={W-PAD.r} y1={yScale(v)} y2={yScale(v)} stroke="rgba(15,23,42,.06)" strokeWidth="1" />
         ))}
-        {/* Y labels */}
         {[minP, minP+(maxP-minP)*0.5, maxP].map((v,i)=>(
-          <text key={i} x={PAD.l-4} y={yScale(v)+3} textAnchor="end" fontSize="7" fill="rgba(255,255,255,.3)">{fmtPace(v)}</text>
+          <text key={i} x={PAD.l-4} y={yScale(v)+3} textAnchor="end" fontSize="7" fill="rgba(15,23,42,.35)">{fmtPace(v)}</text>
         ))}
-        {/* Area fill */}
         <polygon points={`${pts[0].x},${H-PAD.b} ${polyline} ${pts[pts.length-1].x},${H-PAD.b}`}
-          fill="url(#paceGrad)" opacity="0.4" />
+          fill="url(#paceGrad)" opacity="0.3" />
         <defs>
           <linearGradient id="paceGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#E84A00" stopOpacity="0.6" />
-            <stop offset="100%" stopColor="#E84A00" stopOpacity="0" />
+            <stop offset="0%" stopColor="#2563EB" stopOpacity="0.5" />
+            <stop offset="100%" stopColor="#2563EB" stopOpacity="0" />
           </linearGradient>
         </defs>
-        {/* Line */}
-        <polyline points={polyline} fill="none" stroke="#E84A00" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-        {/* Dots */}
+        <polyline points={polyline} fill="none" stroke="#2563EB" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
         {pts.map((p,i)=>(
-          <circle key={i} cx={p.x} cy={p.y} r="2.5" fill="#E84A00" stroke="#070A0E" strokeWidth="1.5" />
+          <circle key={i} cx={p.x} cy={p.y} r="2.5" fill="#2563EB" stroke="#fff" strokeWidth="1.5" />
         ))}
-        {/* X labels — first and last */}
-        <text x={pts[0].x} y={H} textAnchor="middle" fontSize="7" fill="rgba(255,255,255,.3)">{shortDate(data[0].date)}</text>
-        <text x={pts[pts.length-1].x} y={H} textAnchor="middle" fontSize="7" fill="rgba(255,255,255,.3)">{shortDate(data[data.length-1].date)}</text>
+        <text x={pts[0].x} y={H} textAnchor="middle" fontSize="7" fill="rgba(15,23,42,.35)">{shortDate(data[0].date)}</text>
+        <text x={pts[pts.length-1].x} y={H} textAnchor="middle" fontSize="7" fill="rgba(15,23,42,.35)">{shortDate(data[data.length-1].date)}</text>
       </svg>
     </div>
   );
@@ -826,44 +820,53 @@ function SCard({ s, past, completed, quiz, periods, onToggle }) {
   const pi     = getPeriodInfo(s.date, periods);
   const isToday = s.date===new Date().toISOString().split("T")[0];
 
+  // Show actual Strava/manual distance if available, fall back to planned
+  const displayDist = quiz?.dist || s.distance;
+  const hasActualDist = !!quiz?.dist && quiz.dist !== s.distance;
+
   return (
     <div style={{
       borderRadius:12,padding:"12px 14px",
       opacity:(past&&!completed)?0.5:1,
-      background:completed?"rgba(74,222,128,.04)":isToday?"rgba(232,74,0,.06)":"rgba(255,255,255,.03)",
-      border:`1px solid ${completed?"rgba(74,222,128,.15)":isToday?"rgba(232,74,0,.18)":pi.onPeriod&&pi.heavy?"rgba(236,72,153,.15)":"rgba(255,255,255,.06)"}`,
+      background:completed?"rgba(22,163,74,.04)":isToday?"#EFF6FF":"#fff",
+      border:`1px solid ${completed?"rgba(22,163,74,.15)":isToday?"rgba(37,99,235,.2)":pi.onPeriod&&pi.heavy?"rgba(236,72,153,.15)":"rgba(15,23,42,.08)"}`,
+      boxShadow:isToday?"0 2px 8px rgba(37,99,235,.08)":completed?"none":"0 1px 3px rgba(15,23,42,.04)",
       transition:"all .18s",
     }}>
-      {isToday&&!completed && <div style={{fontSize:9,color:"#FBBF24",fontWeight:700,textTransform:"uppercase",letterSpacing:".1em",marginBottom:5}}>TODAY</div>}
+      {isToday&&!completed && <div style={{fontSize:9,color:"#2563EB",fontWeight:700,textTransform:"uppercase",letterSpacing:".1em",marginBottom:5}}>TODAY</div>}
       {pi.onPeriod && <div style={{fontSize:9,color:"#EC4899",marginBottom:4}}>🌸 Period day {pi.day}{pi.heavy?" — ease off today":""}</div>}
-      {quiz?.fromStrava && <div style={{fontSize:9,color:"rgba(252,76,2,.6)",marginBottom:4}}>⚡ Synced from Strava</div>}
+      {quiz?.fromStrava && <div style={{fontSize:9,color:"rgba(252,76,2,.7)",marginBottom:4}}>⚡ Synced from Strava</div>}
 
       <div style={{display:"flex",alignItems:"center",gap:10}}>
         {!isRest && (
           <button onClick={e=>{e.stopPropagation();onToggle();}}
             style={{width:22,height:22,borderRadius:6,flexShrink:0,cursor:"pointer",
-              border:`1.5px solid ${completed?"#4ADE80":"rgba(255,255,255,.15)"}`,
-              background:completed?"rgba(74,222,128,.12)":"transparent",
+              border:`1.5px solid ${completed?"#16A34A":"rgba(15,23,42,.18)"}`,
+              background:completed?"rgba(22,163,74,.1)":"transparent",
               display:"flex",alignItems:"center",justifyContent:"center",transition:"all .18s"}}>
-            {completed&&<span style={{fontSize:11,color:"#4ADE80"}}>✓</span>}
+            {completed&&<span style={{fontSize:11,color:"#16A34A"}}>✓</span>}
           </button>
         )}
         <div style={{fontSize:17,width:26,textAlign:"center",flexShrink:0}}>{ICON[s.type]||"📅"}</div>
 
         <div style={{flex:1,minWidth:0,cursor:isRest?"default":"pointer"}} onClick={()=>!isRest&&setOpen(o=>!o)}>
           <div style={{display:"flex",alignItems:"center",gap:5,marginBottom:1}}>
-            <span style={{fontSize:9,fontWeight:700,color:"rgba(255,255,255,.3)",textTransform:"uppercase",letterSpacing:".07em"}}>{s.dayOfWeek}</span>
-            {completed&&<span style={{fontSize:9,background:isGym?"rgba(129,140,248,.1)":"rgba(74,222,128,.08)",
-              color:isGym?"#818CF8":"#4ADE80",padding:"1px 5px",borderRadius:3,fontWeight:700}}>DONE</span>}
-            {s.type==="Long Run"&&<span style={{fontSize:9,color:"rgba(129,140,248,.5)",padding:"1px 5px",borderRadius:3,background:"rgba(129,140,248,.06)"}}>flex Wed/Thu</span>}
+            <span style={{fontSize:9,fontWeight:600,color:"rgba(15,23,42,.4)",textTransform:"uppercase",letterSpacing:".07em"}}>{s.dayOfWeek}</span>
+            <span style={{fontSize:9,color:"rgba(15,23,42,.25)"}}>· {shortDateStr(s.date)}</span>
+            {completed&&<span style={{fontSize:9,background:isGym?"rgba(124,58,237,.09)":"rgba(22,163,74,.08)",
+              color:isGym?"#7C3AED":"#16A34A",padding:"1px 5px",borderRadius:3,fontWeight:700}}>DONE</span>}
+            {s.type==="Long Run"&&<span style={{fontSize:9,color:"rgba(124,58,237,.6)",padding:"1px 5px",borderRadius:3,background:"rgba(124,58,237,.06)"}}>flex Wed/Thu</span>}
           </div>
-          <div style={{fontSize:13,fontWeight:600,color:isRest?"rgba(255,255,255,.2)":"#fff"}}>{s.type}</div>
+          <div style={{fontSize:13,fontWeight:600,color:isRest?"rgba(15,23,42,.3)":"#0F172A"}}>{s.type}</div>
         </div>
 
         {!isRest && (
           <div style={{textAlign:"right",flexShrink:0,cursor:"pointer"}} onClick={()=>!isRest&&setOpen(o=>!o)}>
-            <div style={{fontSize:14,fontWeight:700,color:completed?"rgba(74,222,128,.7)":"#fff"}}>{s.distance}</div>
-            <div style={{fontSize:10,color:"rgba(255,255,255,.3)"}}>{s.duration}</div>
+            <div style={{fontSize:14,fontWeight:700,color:completed?(hasActualDist?"#2563EB":"#16A34A"):"#0F172A"}}>
+              {displayDist}
+              {hasActualDist && <span style={{fontSize:9,display:"block",color:"rgba(15,23,42,.3)",fontWeight:400}}>planned {s.distance}</span>}
+            </div>
+            <div style={{fontSize:10,color:"rgba(15,23,42,.35)"}}>{s.duration}</div>
             <div style={{fontSize:8,fontWeight:700,color:cfg.c,background:cfg.bg,border:`1px solid ${cfg.b}`,
               padding:"2px 6px",borderRadius:4,marginTop:3,letterSpacing:".07em",textTransform:"uppercase",display:"inline-block"}}>{cfg.l}</div>
           </div>
@@ -871,30 +874,30 @@ function SCard({ s, past, completed, quiz, periods, onToggle }) {
       </div>
 
       {open&&!isRest && (
-        <div className="fi" style={{marginTop:10,paddingTop:10,borderTop:"1px solid rgba(255,255,255,.05)"}}>
+        <div className="fi" style={{marginTop:10,paddingTop:10,borderTop:"1px solid rgba(15,23,42,.06)"}}>
           {pg && (
-            <div style={{marginBottom:9,padding:"9px 11px",background:"rgba(232,74,0,.04)",border:"1px solid rgba(232,74,0,.1)",borderRadius:8}}>
+            <div style={{marginBottom:9,padding:"9px 11px",background:"#EFF6FF",border:"1px solid rgba(37,99,235,.15)",borderRadius:8}}>
               <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:3}}>
-                <span style={{fontSize:9,color:"#E84A00",fontWeight:700,textTransform:"uppercase",letterSpacing:".08em"}}>Target for 2:13–2:21</span>
-                <span style={{fontSize:14,fontWeight:700,color:"#E84A00"}}>{pg.range}</span>
+                <span style={{fontSize:9,color:"#2563EB",fontWeight:700,textTransform:"uppercase",letterSpacing:".08em"}}>Target for 2:13–2:21</span>
+                <span style={{fontSize:14,fontWeight:700,color:"#2563EB"}}>{pg.range}</span>
               </div>
-              <div style={{fontSize:11,color:"rgba(255,255,255,.35)"}}>{pg.tip}</div>
+              <div style={{fontSize:11,color:"rgba(15,23,42,.45)"}}>{pg.tip}</div>
             </div>
           )}
           {isRun && (
             <div style={{display:"flex",gap:16,marginBottom:8}}>
-              <div><div style={{fontSize:9,color:"rgba(255,255,255,.25)",textTransform:"uppercase",letterSpacing:".07em"}}>Plan pace</div><div style={{fontSize:13,fontWeight:600,marginTop:1}}>{s.pace}</div></div>
-              <div><div style={{fontSize:9,color:"rgba(255,255,255,.25)",textTransform:"uppercase",letterSpacing:".07em"}}>Duration</div><div style={{fontSize:13,fontWeight:600,marginTop:1}}>{s.duration}</div></div>
-              {quiz?.pace&&<div><div style={{fontSize:9,color:"#4ADE80",textTransform:"uppercase",letterSpacing:".07em"}}>Actual</div><div style={{fontSize:13,fontWeight:600,color:"#4ADE80",marginTop:1}}>{quiz.pace}</div></div>}
-              {quiz?.dist&&<div><div style={{fontSize:9,color:"#60A5FA",textTransform:"uppercase",letterSpacing:".07em"}}>Distance</div><div style={{fontSize:13,fontWeight:600,color:"#60A5FA",marginTop:1}}>{quiz.dist}</div></div>}
+              <div><div style={{fontSize:9,color:"rgba(15,23,42,.35)",textTransform:"uppercase",letterSpacing:".07em"}}>Plan pace</div><div style={{fontSize:13,fontWeight:600,marginTop:1,color:"#0F172A"}}>{s.pace}</div></div>
+              <div><div style={{fontSize:9,color:"rgba(15,23,42,.35)",textTransform:"uppercase",letterSpacing:".07em"}}>Duration</div><div style={{fontSize:13,fontWeight:600,marginTop:1,color:"#0F172A"}}>{s.duration}</div></div>
+              {quiz?.pace&&<div><div style={{fontSize:9,color:"#16A34A",textTransform:"uppercase",letterSpacing:".07em"}}>Actual pace</div><div style={{fontSize:13,fontWeight:600,color:"#16A34A",marginTop:1}}>{quiz.pace}</div></div>}
+              {quiz?.dist&&<div><div style={{fontSize:9,color:"#2563EB",textTransform:"uppercase",letterSpacing:".07em"}}>Distance</div><div style={{fontSize:13,fontWeight:600,color:"#2563EB",marginTop:1}}>{quiz.dist}</div></div>}
             </div>
           )}
-          <div style={{fontSize:12,color:"rgba(255,255,255,.35)",lineHeight:1.6,background:"rgba(0,0,0,.3)",padding:"9px 11px",borderRadius:7,marginBottom:quiz?8:0}}>{s.description}</div>
+          <div style={{fontSize:12,color:"rgba(15,23,42,.4)",lineHeight:1.6,background:"rgba(15,23,42,.03)",padding:"9px 11px",borderRadius:7,marginBottom:quiz?8:0}}>{s.description}</div>
           {quiz&&(
-            <div style={{display:"flex",gap:10,padding:"8px 11px",background:"rgba(74,222,128,.03)",border:"1px solid rgba(74,222,128,.1)",borderRadius:7,marginTop:8,flexWrap:"wrap"}}>
+            <div style={{display:"flex",gap:10,padding:"8px 11px",background:"rgba(22,163,74,.04)",border:"1px solid rgba(22,163,74,.12)",borderRadius:7,marginTop:8,flexWrap:"wrap"}}>
               {quiz.feel&&<span style={{fontSize:18}}>{FEEL.find(f=>f.v===quiz.feel)?.e}</span>}
-              <div style={{fontSize:11,color:"rgba(255,255,255,.4)"}}>
-                {quiz.feel&&<span style={{color:"#4ADE80",fontWeight:600}}>{FEEL.find(f=>f.v===quiz.feel)?.l}</span>}
+              <div style={{fontSize:11,color:"rgba(15,23,42,.45)"}}>
+                {quiz.feel&&<span style={{color:"#16A34A",fontWeight:600}}>{FEEL.find(f=>f.v===quiz.feel)?.l}</span>}
                 {quiz.mood&&<> · {quiz.mood}</>}
                 {quiz.notes&&<div style={{marginTop:3,fontStyle:"italic",fontSize:10}}>"{quiz.notes}"</div>}
               </div>
@@ -915,43 +918,45 @@ function QuizModal({ session, onSubmit, onClose }) {
   const [moved, setMoved] = useState(false);
 
   return (
-    <div style={{position:"fixed",inset:0,zIndex:100,display:"flex",alignItems:"flex-end",background:"rgba(0,0,0,.8)"}}
+    <div style={{position:"fixed",inset:0,zIndex:100,display:"flex",alignItems:"flex-end",background:"rgba(15,23,42,.5)"}}
       onClick={e=>{if(e.target===e.currentTarget)onClose();}}>
-      <div className="su" style={{width:"100%",maxWidth:700,margin:"0 auto",background:"#111620",borderRadius:"18px 18px 0 0",padding:"20px 18px 32px",border:"1px solid rgba(255,255,255,.07)"}}>
-        <div style={{width:36,height:3,background:"rgba(255,255,255,.1)",borderRadius:2,margin:"0 auto 16px"}} />
+      <div className="su" style={{width:"100%",maxWidth:700,margin:"0 auto",background:"#fff",borderRadius:"18px 18px 0 0",
+        padding:"20px 18px 32px",border:"1px solid rgba(15,23,42,.08)",boxShadow:"0 -4px 32px rgba(15,23,42,.1)"}}>
+        <div style={{width:36,height:3,background:"rgba(15,23,42,.12)",borderRadius:2,margin:"0 auto 16px"}} />
         <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:18}}>
           <div>
-            <div style={{fontSize:15,fontWeight:700}}>How was your run? 🏃</div>
-            <div style={{fontSize:11,color:"rgba(255,255,255,.35)",marginTop:2}}>{session.type} · {session.distance} · {session.dayOfWeek}</div>
+            <div style={{fontSize:15,fontWeight:700,color:"#0F172A"}}>How was your run? 🏃</div>
+            <div style={{fontSize:11,color:"rgba(15,23,42,.4)",marginTop:2}}>{session.type} · {session.distance} · {session.dayOfWeek}</div>
           </div>
           <button className="btn-ghost" style={{padding:"4px 8px",fontSize:12}} onClick={onClose}>✕</button>
         </div>
 
         <div style={{marginBottom:16}}>
-          <div style={{fontSize:10,fontWeight:600,color:"rgba(255,255,255,.35)",textTransform:"uppercase",letterSpacing:".08em",marginBottom:9}}>How did it feel?</div>
+          <div style={{fontSize:10,fontWeight:600,color:"rgba(15,23,42,.4)",textTransform:"uppercase",letterSpacing:".08em",marginBottom:9}}>How did it feel?</div>
           <div style={{display:"flex",gap:7}}>
             {FEEL.map(f=>(
               <button key={f.v} onClick={()=>setFeel(f.v)}
-                style={{flex:1,padding:"10px 4px",border:`1px solid ${feel===f.v?"#4ADE80":"rgba(255,255,255,.08)"}`,
-                  background:feel===f.v?"rgba(74,222,128,.07)":"transparent",borderRadius:9,cursor:"pointer",
+                style={{flex:1,padding:"10px 4px",border:`1px solid ${feel===f.v?"#16A34A":"rgba(15,23,42,.1)"}`,
+                  background:feel===f.v?"rgba(22,163,74,.06)":"transparent",borderRadius:9,cursor:"pointer",
                   display:"flex",flexDirection:"column",alignItems:"center",gap:4,transition:"all .15s"}}>
                 <span style={{fontSize:20}}>{f.e}</span>
-                <span style={{fontSize:9,color:feel===f.v?"#4ADE80":"rgba(255,255,255,.3)",fontWeight:600,textTransform:"uppercase"}}>{f.l}</span>
+                <span style={{fontSize:9,color:feel===f.v?"#16A34A":"rgba(15,23,42,.35)",fontWeight:600,textTransform:"uppercase"}}>{f.l}</span>
               </button>
             ))}
           </div>
         </div>
 
         <div style={{marginBottom:16}}>
-          <div style={{fontSize:10,fontWeight:600,color:"rgba(255,255,255,.35)",textTransform:"uppercase",letterSpacing:".08em",marginBottom:8}}>
-            Actual pace <span style={{color:"rgba(255,255,255,.2)",textTransform:"none",letterSpacing:0}}>(optional)</span>
+          <div style={{fontSize:10,fontWeight:600,color:"rgba(15,23,42,.4)",textTransform:"uppercase",letterSpacing:".08em",marginBottom:8}}>
+            Actual pace <span style={{color:"rgba(15,23,42,.25)",textTransform:"none",letterSpacing:0}}>(optional)</span>
           </div>
           <input value={pace} onChange={e=>setPace(e.target.value)} placeholder={`Plan: ${session.pace}`}
-            style={{width:"100%",background:"rgba(0,0,0,.4)",border:"1px solid rgba(255,255,255,.1)",borderRadius:8,padding:"10px 12px",fontSize:14,color:"#fff",fontFamily:"DM Sans,sans-serif",outline:"none"}} />
+            style={{width:"100%",background:"rgba(15,23,42,.03)",border:"1px solid rgba(15,23,42,.1)",borderRadius:8,
+              padding:"10px 12px",fontSize:14,color:"#0F172A",fontFamily:"DM Sans,sans-serif",outline:"none"}} />
         </div>
 
         <div style={{marginBottom:16}}>
-          <div style={{fontSize:10,fontWeight:600,color:"rgba(255,255,255,.35)",textTransform:"uppercase",letterSpacing:".08em",marginBottom:8}}>Energy going in</div>
+          <div style={{fontSize:10,fontWeight:600,color:"rgba(15,23,42,.4)",textTransform:"uppercase",letterSpacing:".08em",marginBottom:8}}>Energy going in</div>
           <div style={{display:"flex",gap:7,flexWrap:"wrap"}}>
             {MOOD_OPTS.map(m=>(
               <button key={m} className={`opt ${mood===m?"sel":""}`} onClick={()=>setMood(m)}>{m}</button>
@@ -960,17 +965,18 @@ function QuizModal({ session, onSubmit, onClose }) {
         </div>
 
         <div style={{marginBottom:16}}>
-          <div style={{fontSize:10,fontWeight:600,color:"rgba(255,255,255,.35)",textTransform:"uppercase",letterSpacing:".08em",marginBottom:8}}>
-            Notes <span style={{color:"rgba(255,255,255,.2)",textTransform:"none",letterSpacing:0}}>(optional)</span>
+          <div style={{fontSize:10,fontWeight:600,color:"rgba(15,23,42,.4)",textTransform:"uppercase",letterSpacing:".08em",marginBottom:8}}>
+            Notes <span style={{color:"rgba(15,23,42,.25)",textTransform:"none",letterSpacing:0}}>(optional)</span>
           </div>
           <textarea value={notes} onChange={e=>setNotes(e.target.value)} placeholder="Anything worth remembering…" rows={2}
-            style={{width:"100%",background:"rgba(0,0,0,.4)",border:"1px solid rgba(255,255,255,.1)",borderRadius:8,padding:"9px 12px",fontSize:13,color:"#fff",fontFamily:"DM Sans,sans-serif",resize:"none",outline:"none"}} />
+            style={{width:"100%",background:"rgba(15,23,42,.03)",border:"1px solid rgba(15,23,42,.1)",borderRadius:8,
+              padding:"9px 12px",fontSize:13,color:"#0F172A",fontFamily:"DM Sans,sans-serif",resize:"none",outline:"none"}} />
         </div>
 
         <div style={{marginBottom:16,display:"flex",alignItems:"center",gap:9}}>
           <input type="checkbox" id="moved" checked={moved} onChange={e=>setMoved(e.target.checked)}
-            style={{accentColor:"#E84A00",width:15,height:15,cursor:"pointer"}} />
-          <label htmlFor="moved" style={{fontSize:12,color:"rgba(255,255,255,.4)",cursor:"pointer"}}>I did this on a different day</label>
+            style={{accentColor:"#2563EB",width:15,height:15,cursor:"pointer"}} />
+          <label htmlFor="moved" style={{fontSize:12,color:"rgba(15,23,42,.45)",cursor:"pointer"}}>I did this on a different day</label>
         </div>
 
         <button className="btn" style={{width:"100%",justifyContent:"center",padding:14}} disabled={feel===null}
@@ -1000,30 +1006,33 @@ function SettingsModal({ periods, onSave, onClose }) {
   }
 
   return (
-    <div style={{position:"fixed",inset:0,zIndex:100,display:"flex",alignItems:"flex-end",background:"rgba(0,0,0,.8)"}}
+    <div style={{position:"fixed",inset:0,zIndex:100,display:"flex",alignItems:"flex-end",background:"rgba(15,23,42,.5)"}}
       onClick={e=>{if(e.target===e.currentTarget)onClose();}}>
-      <div className="su" style={{width:"100%",maxWidth:700,margin:"0 auto",background:"#111620",borderRadius:"18px 18px 0 0",padding:"20px 18px 32px",border:"1px solid rgba(255,255,255,.07)"}}>
-        <div style={{width:36,height:3,background:"rgba(255,255,255,.1)",borderRadius:2,margin:"0 auto 16px"}} />
+      <div className="su" style={{width:"100%",maxWidth:700,margin:"0 auto",background:"#fff",borderRadius:"18px 18px 0 0",
+        padding:"20px 18px 32px",border:"1px solid rgba(15,23,42,.08)",boxShadow:"0 -4px 32px rgba(15,23,42,.1)"}}>
+        <div style={{width:36,height:3,background:"rgba(15,23,42,.12)",borderRadius:2,margin:"0 auto 16px"}} />
         <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:6}}>
-          <div style={{fontSize:15,fontWeight:700}}>Period dates ⚙️</div>
+          <div style={{fontSize:15,fontWeight:700,color:"#0F172A"}}>Period dates ⚙️</div>
           <button className="btn-ghost" style={{padding:"4px 8px",fontSize:12}} onClick={onClose}>✕</button>
         </div>
-        <div style={{fontSize:12,color:"rgba(255,255,255,.35)",marginBottom:18,lineHeight:1.5}}>
+        <div style={{fontSize:12,color:"rgba(15,23,42,.4)",marginBottom:18,lineHeight:1.5}}>
           Update your cycle dates so the plan highlights the right weeks. Apple Health can't be read directly from the web, so update these manually when your cycle shifts.
         </div>
         {dates.map((d,i)=>(
           <div key={i} style={{marginBottom:14}}>
-            <div style={{fontSize:10,color:"rgba(255,255,255,.3)",textTransform:"uppercase",letterSpacing:".08em",marginBottom:7}}>Period {d.num}</div>
+            <div style={{fontSize:10,color:"rgba(15,23,42,.35)",textTransform:"uppercase",letterSpacing:".08em",marginBottom:7}}>Period {d.num}</div>
             <div style={{display:"flex",gap:10}}>
               <div style={{flex:1}}>
-                <div style={{fontSize:10,color:"rgba(255,255,255,.25)",marginBottom:4}}>Start</div>
+                <div style={{fontSize:10,color:"rgba(15,23,42,.3)",marginBottom:4}}>Start</div>
                 <input type="date" value={d.start} onChange={e=>update(i,"start",e.target.value)}
-                  style={{width:"100%",background:"rgba(0,0,0,.4)",border:"1px solid rgba(255,255,255,.1)",borderRadius:8,padding:"9px 10px",fontSize:13,color:"#fff",fontFamily:"DM Sans,sans-serif",outline:"none",colorScheme:"dark"}} />
+                  style={{width:"100%",background:"rgba(15,23,42,.03)",border:"1px solid rgba(15,23,42,.1)",borderRadius:8,
+                    padding:"9px 10px",fontSize:13,color:"#0F172A",fontFamily:"DM Sans,sans-serif",outline:"none",colorScheme:"light"}} />
               </div>
               <div style={{flex:1}}>
-                <div style={{fontSize:10,color:"rgba(255,255,255,.25)",marginBottom:4}}>End</div>
+                <div style={{fontSize:10,color:"rgba(15,23,42,.3)",marginBottom:4}}>End</div>
                 <input type="date" value={d.end} onChange={e=>update(i,"end",e.target.value)}
-                  style={{width:"100%",background:"rgba(0,0,0,.4)",border:"1px solid rgba(255,255,255,.1)",borderRadius:8,padding:"9px 10px",fontSize:13,color:"#fff",fontFamily:"DM Sans,sans-serif",outline:"none",colorScheme:"dark"}} />
+                  style={{width:"100%",background:"rgba(15,23,42,.03)",border:"1px solid rgba(15,23,42,.1)",borderRadius:8,
+                    padding:"9px 10px",fontSize:13,color:"#0F172A",fontFamily:"DM Sans,sans-serif",outline:"none",colorScheme:"light"}} />
               </div>
             </div>
           </div>
